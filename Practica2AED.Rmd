@@ -67,3 +67,101 @@ knit_hooks$set(inline = function(x) {
     paste(as.character(x), collapse = ', ')
   }
 })
+```
+
+
+##Ejercicio 1: 
+
+```{r}
+#Cargamos la librería "ggplot2"
+library(ggplot2)
+
+#Importamos el fichero weatherAUS.RData
+load("./data/weatherAUS.RData")
+
+#Inpeccionamos los datos 
+ls() #objetos "ds" y "params"
+dim(ds) #863 filas y 24 columnas
+str(ds) #tipo de datos para cada columna
+head(ds) #primeras filas
+tail(ds) #últimas filas
+summary(ds) #resumen d elas variables/filas
+
+
+```
+
+
+
+```{r}
+#Creamos un objeto llamado "grafico1" donde representaremos MinTemp en el eje x y MaxTemp en el eje y
+
+grafico1 <- ggplot(data = ds,
+                   mapping = aes(x = MinTemp, y = MaxTemp))
+
+#Ahora, para obtener el gráfico de dispersión aplicamos geom_point()
+grafico1 + geom_point()
+
+#Genera ahora el mismo gráfico y almacénalo en grafico2 pero define el aesthetics para visualizar las variables MinTemp y MaxTemp en los ejes de la gráfica y la variable categórica RainTomorrow como el color. A partir del objeto grafico2, representa un gráfico de dispersión en el que se muestren los puntos con el color del punto correspondiente a la variable RainTomorrow
+
+grafico2 <- ggplot(data = ds,
+                   mapping = aes(x = MinTemp, y = MaxTemp, color = RainTomorrow))
+
+#Añadiendo los puntos, tenemos:
+grafico2 + geom_point()
+
+#Añade a grafico2 una capa para incluir un título con ggtitle() y almacénalo en grafico3.
+grafico3 <- grafico2 + geom_point() +ggtitle("TempMin frente a TempMax según RainTomorrow")
+grafico3
+
+#Guardamos en un pdf el gráfico
+ggsave(filename = "./results/Ejercicio1.pdf",
+       plot = grafico3)
+```
+
+##Ejercicio 2
+
+```{r}
+#Utilizando ggplot haz un grafico de dispersión en el que representes las variables Temp9am y Pressure9am en los ejes x e y respectivamente.
+
+grafico <- ggplot(data = ds, mapping = aes(x = Temp9am, y = Pressure9am)) +geom_point()
+
+grafico #lo visualizamos
+
+#Modifica el gráfico anterior para incluir información categórica proporcionada por la variable RainToday con la forma del punto.
+
+grafico_forma <- ggplot(data = ds,mapping = aes(x = Temp9am,  y = Pressure9am, shape = RainToday)) +geom_point()
+
+grafico_forma
+
+#Modifica el gráfico anterior para incluir información categórica proporcionada por la variable RainToday con el color del punto. ¿Con qué representación (color o forma) se observa mejor la información que introduce la variable RainToday?
+
+#Hacemos los mismo, pero utilizando el color
+
+grafico_color <- ggplot(data = ds, mapping = aes(x = Temp9am, y = Pressure9am,color = RainToday)) + geom_point()
+
+grafico_color
+
+#Con el color es más fácil distinguir las categorías
+
+#Añadimos título, subtítulo y leyendas
+grafico_final <- grafico_color +
+labs(title = "Temperatura y Presión atmosférica",
+       subtitle = "Comparación según si llovió ese día",
+       x = "Temperatura",
+       y = "Presión",
+       color = "Llovió, o no")
+
+grafico_final
+#Guardamos en formato pdf
+ggsave(filename = "./results/Ejercicio2.pdf", plot = grafico_final)
+
+
+```
+
+##Ejercicio 3
+
+```{r}
+
+```
+
+
