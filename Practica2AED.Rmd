@@ -162,6 +162,113 @@ ggsave(filename = "./results/Ejercicio2.pdf", plot = grafico_final)
 
 ```{r}
 
+#Cargamos el fichero
+load("./data/iris.Rdata")
+
+#Inspeccionamos
+ls()
+str(iris)
+
+#Crea un objeto ggplot denominado iris.grafico1 en el que esté definido el conjunto de datos iris.tidy alojado en el fichero iris.tidy.RData y un aesthetics en el que en el eje x esté definida la variable Species y en el eje y esté definida la variable Value.
+
+#Cogemos la primera columna Sepal.Length pues la Values no existe en iris.RData, además, el archivo RData original se llama iris.RData, no existía iris.tidy.RData
+
+iris.grafico1 <- ggplot(data = iris, mapping = aes(x = Species, y = Sepal.Length))
+
+#capa que defina el objeto geométrico necesario para construir un gráfico de dispersión de las variables Species y Value.
+
+iris.grafico1 + geom_point()
+
+#Modifica el aesthetics de iris.grafico1 para visualizar la variable categórica Part y almacénalo en iris.grafico2. A partir del objeto iris.grafico2, representa un gráfico de dispersión en el que se muestren los puntos dados por las variables Species y Value, y el color del punto se corresponda con el valor de la variable Part
+
+iris.grafico2 <- iris.grafico1 + aes(color = Part)
+
+#A partir de aquí no funciona porque no dispongo del archivo iris.tidy.RData
+
+#iris.grafico2 + geom_point()
+
+
+#Representamos los dos valores de Measure en paneles dispuestos en filas.
+iris.grafico_filas <- iris.grafico2 + geom_point() + facet_grid(Measure ~ .)
+
+iris.grafico_filas
+
+#Con columnas
+#iris.grafico_columnas <- iris.grafico2 +geom_point() + facet_grid(. ~ Measure)
+
+#iris.grafico_columnas
+
+#iris.grafico_final <- iris.grafico2 + geom_jitter(width = 0.1, height = 0) +
+#facet_grid(Measure ~ .)
+
+#iris.grafico_final
+
+#Guardamos en pdf
+#ggsave(filename = "./results/Ejercicio3.pdf", plot = iris.grafico_final)
+
+ #Measure tampoco está, las indicaciones no corresponden con el archivo proporcionado en la carpeta data
 ```
+##Ejercicio 4
+
+```{r}
+#Cargamos el fichero
+fichero <- load("./data/Ejercicio4_Data.Rdata")
+
+fichero
+
+#Inspeccionamos
+str(DatosEjer4)
+names(DatosEjer4)
+head(DatosEjer4)
+
+#Gráfico de puntos
+grafico4_1 <- ggplot(
+  data = DatosEjer4,
+  mapping = aes(
+    x = .data[["Fecha"]],
+    y = .data[["Ventas"]],
+    color = .data[[ "Fabricante"]])) +geom_point()
+
+grafico4_1
+
+#Unimos puntos con las líneas
+grafico4_2 <- ggplot(
+  data =  DatosEjer4,
+  mapping = aes(
+    x = .data[["Fecha"]],
+    y = .data[["Ventas"]],
+    color = .data[["Fabricante"]],
+    group = .data[["Fabricante"]])) +geom_line() +geom_point()
+
+grafico4_2
+
+#Diferenciamos los fabricantes mediante tipos de línea diferentes
+
+grafico4_final <- ggplot(
+  data = DatosEjer4,
+  mapping = aes(
+    x = .data[["Fecha"]],
+    y = .data[["Ventas"]],
+    color = .data[["Fabricante"]],
+    group = .data[["Fabricante"]]
+  )
+) +
+  geom_line(aes(linetype = .data[["Fabricante"]])) +
+  geom_point() +
+  labs(
+    title = "Ventas mensuales de diferentes compañías tecnológicas",
+    x = "Fecha",
+    y = "Ventas",
+    color = "Fabricante",
+    linetype = "Fabricante"
+  ) + theme_classic()
+
+grafico4_final
+
+#Guardamos en pdf
+ggsave(filename = "./results/Ejercicio4.pdf",plot = grafico4_final)
+
+```
+
 
 
