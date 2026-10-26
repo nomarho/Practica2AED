@@ -374,4 +374,47 @@ grafico6
 ggsave(filename = "./results/Ejercicio6.pdf",plot = grafico6)
 ```
 
+##Ejercicio 7
+
+```{r}
+#Cargamos los datoss
+fichero <- load("./data/weatherAUS_distributions.RData")
+fichero
+#Inspeccionamos
+str(ds)
+names(ds)
+head(ds)
+
+#Gráfico con los boxplots de la MinTemp
+grafico7_1 <- ggplot(
+  data = ds,
+  mapping = aes(x = factor(Year), #Categorías separadas
+                y = MinTemp)) +
+  geom_boxplot() +
+  labs(title = "Distribución de TempMin por año",
+       x = "Año",
+       y = "TempMin (grados celsius)") +theme_classic()
+
+grafico7_1
+
+#Gráfico con los gráficos de violín de la MaxTemp
+grafico7_2 <- ggplot(data = ds,
+  mapping = aes(x = factor(Year),
+                y = MaxTemp,
+                fill = factor(Year))) +
+  geom_violin() +
+  labs(title = "Distribución de temperaturas máximas por año",x = "Año",y = "TempMax (grados celsius)",
+       fill = "Año") +theme_classic()
+
+grafico7_2
+
+#En el gráfico anterior elimina la leyenda y coloca los años en el eje xa 45 grados de inclinación. Busca información sobre cómo hacer esto
+
+grafico7_final <- grafico7_2 +theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1)) #Buscado en internet
+grafico7_final
+
+#Guardamos
+ggsave(filename = "./results/Ejercicio7.pdf",plot = grafico7_final)
+
+```
 
