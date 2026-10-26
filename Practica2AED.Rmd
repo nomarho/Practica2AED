@@ -250,9 +250,7 @@ grafico4_final <- ggplot(
     x = .data[["Fecha"]],
     y = .data[["Ventas"]],
     color = .data[["Fabricante"]],
-    group = .data[["Fabricante"]]
-  )
-) +
+    group = .data[["Fabricante"]])) +
   geom_line(aes(linetype = .data[["Fabricante"]])) +
   geom_point() +
   labs(
@@ -260,8 +258,7 @@ grafico4_final <- ggplot(
     x = "Fecha",
     y = "Ventas",
     color = "Fabricante",
-    linetype = "Fabricante"
-  ) + theme_classic()
+    linetype = "Fabricante") + theme_classic()
 
 grafico4_final
 
@@ -300,14 +297,12 @@ grafico5_2 <- ggplot(
                 y = Altura,
                 color = Complemento,
                 linetype = Complemento,
-                shape = Complemento)
-) +
+                shape = Complemento)) +
   geom_errorbar(
     aes(ymin = Altura - Error_Altura,
         ymax = Altura + Error_Altura),
     width = 0.1,
-    position = position_dodge(0.05)
-  ) +
+    position = position_dodge(0.05)) +
   geom_line() +
   geom_point() +
   labs(title = "Altura en función de la dosis",
@@ -326,14 +321,12 @@ grafico5_3 <- ggplot(
   data = Experimento,
   mapping = aes(x = Dosis,
                 y = Altura,
-                color = Complemento)
-) +
+                color = Complemento)) +
   geom_errorbar(
     aes(ymin = Altura - Error_Altura,
         ymax = Altura + Error_Altura),
     width = 0.1,
-    position = position_dodge(0.05)
-  ) +
+    position = position_dodge(0.05) ) +
   geom_line(aes(linetype = Complemento)) +
   geom_point(aes(shape = Complemento)) +
   labs(title = "Altura en función de la dosis",
@@ -354,5 +347,31 @@ ggsave(filename = "./results/Ejercicio5.pdf", plot = grafico5_3)
 
 ```
 
+##Ejercicio 6
+
+```{r}
+#Cargamos fichero
+fichero <- load("./data/iceRiver.RData")
+fichero
+str(ice.river.df)
+
+
+#Representa el caudal de ambos ríos
+grafico6 <- ggplot(data =ice.river.df,
+                   mapping = aes(x = time)) +
+  geom_line(aes(y = flow.vat, color = "flow.vat")) +
+  geom_line(aes(y = flow.jok, color = "flow.jok")) +
+  scale_color_manual(name = "Río", values = c("flow.vat" = "red",
+               "flow.jok" = "blue")) +
+  labs(title = "Evolución diaria del caudal de dos ríos",
+       subtitle = "Comparación de las dos series temporales",
+       x = "Día de observación",
+       y = "Caudal medio diario (m^3/s)") + theme_classic()
+
+grafico6
+
+#Guardamos en pdf
+ggsave(filename = "./results/Ejercicio6.pdf",plot = grafico6)
+```
 
 
