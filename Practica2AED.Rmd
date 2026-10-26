@@ -1,0 +1,69 @@
+---
+title: "Practica 2"
+subtitle: "Visualización de datos. Máster en Ciencia de Datos, UV"
+author: "Noa Martín Hodar"
+date: "`r Sys.Date()`"
+
+params:
+  lang: ES
+lang: "`r switch(params$lang, ES = 'es-ES', EN = 'en-US')`"
+
+output:
+  html_document:
+    echo: yes
+    number_sections: yes
+    theme: cerulean
+    toc: yes
+  html_notebook:
+    echo: yes
+    number_sections: yes
+    toc: yes
+  # pdf_document:
+  #   toc: yes
+  #   toc_depth: 3
+  #   number_sections: yes
+
+language:
+  label:
+    fig: 'Figura '
+    tab: 'Tabla '
+    eq: 'Ecuación '
+    thm: 'Teorema '
+    lem: 'Lema '
+    def: 'Definición '
+    cor: 'Corolario '
+    prp: 'Proposición '
+    exm: 'Ejemplo '
+    exr: 'Ejercicio '
+    proof: 'Demostración. '
+    remark: 'Nota: '
+    solution: 'Solución. '
+---
+
+```{r setup, include=FALSE}
+# CONFIGURACIÓN GENERAL
+library(knitr)
+options(width = 100)
+
+# Opciones generales de los chunks (echo = TRUE para que se vea el código por defecto)
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  message = FALSE, 
+  error = FALSE, 
+  warning = FALSE, 
+  comment = NA, 
+  fig.align = 'center', 
+  dpi = 200, 
+  tidy = FALSE, 
+  cache.path = '.cache/', 
+  fig.path = './figura/'
+)
+
+# Formateo de decimales para salidas inline
+knit_hooks$set(inline = function(x) {
+  if(is.numeric(x)) {
+    round(x, getOption('digits'))
+  } else {
+    paste(as.character(x), collapse = ', ')
+  }
+})
